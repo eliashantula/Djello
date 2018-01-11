@@ -1,48 +1,39 @@
 # assignment_djello
 
-Backend: Postgress
+Backend: PostgreSQL
 
-
-Users Table            One to many => Boards 
-					   One to many => Activity
-					   One to many => Comments
-					   One to many => Lists
-					   One to many => Cards
-ID			      	
+Users Table One to many => Boards
+One to many => Activity
+One to many => Comments
+One to many => Lists
+One to many => Cards
+ID
 First Name
 Lastname
 Date Created
 Password Hash
 
-
-
-Boards Table   One to many => Users
-ID
-Title 
-
-
-Lists       One to one => Board
+Boards Table One to many => Users
 ID
 Title
 
+Lists One to one => Board
+ID
+Title
 
-Cards     One to Many => Lists 
-          One to Many => Activity
-Members   One to Many => Comments
+Cards One to Many => Lists
+One to Many => Activity
+Members One to Many => Comments
 ID
 Title
 Description
 
-
-
-
-
-Activity 
+Activity
 ID
-Title
 Date
+Body
 
 Comment  
 ID
-Author
 Date
+Body
