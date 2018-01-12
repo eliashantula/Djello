@@ -1,0 +1,1 @@
+sequelize model:create --name Board-invitations --attributes "userId: string boardId: string"
