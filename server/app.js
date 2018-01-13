@@ -5,7 +5,7 @@ const app = express();
 // ----------------------------------------
 // App Variables
 // ----------------------------------------
-app.locals.appName = 'My App';
+app.locals.appName = 'Djello';
 
 
 // ----------------------------------------
@@ -87,10 +87,8 @@ app.use(morganToolkit());
 // ----------------------------------------
 // Routes
 // ----------------------------------------
-app.use('/', (req, res) => {
-  req.flash('Hi!');
-  res.render('welcome/index');
-});
+const data = require("./routers/data");
+app.use("/api", data);
 
 
 // ----------------------------------------

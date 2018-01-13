@@ -1,22 +1,22 @@
 {
   "development": {
-    "username": "ELH",
+    "username": "eliashantula",
     "password": null,
-    "database": "project_djello_development",
+    "database": "project_djellos_development",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
-    "username": "ELH",
+    "username": "eliashantula",
     "password": null,
-    "database": "project_djello_test",
+    "database": "project_djellos_test",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
-    "username": "ELH",
+    "username": "eliashantula",
     "password": null,
-    "database": "project_djello_production",
+    "database": "project_djellos_production",
     "host": "127.0.0.1",
     "dialect": "postgres"
   }
