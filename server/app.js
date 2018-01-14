@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
-
+var router = express.Router();
+require('es6-promise').polyfill()
+require('isomorphic-fetch')
 
 // ----------------------------------------
 // App Variables
@@ -112,7 +114,7 @@ app.set('view engine', 'handlebars');
 // ----------------------------------------
 const port = process.env.PORT ||
   process.argv[2] ||
-  3000;
+  3001;
 const host = 'localhost';
 
 let args;

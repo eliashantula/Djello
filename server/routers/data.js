@@ -16,7 +16,7 @@ router.get("/users", function(req, res, next) {
 router.get("/users/:id", function(req, res, next) {
   User.findOne({
     where: { id: req.params.id }
-    //include: [Board] //[{model: Board}]
+  
   })
     .then(result => {
       res.status(200).send(result);
@@ -26,13 +26,36 @@ router.get("/users/:id", function(req, res, next) {
 
 router.get("/boards", function(req, res, next) {
   Board.findAll({
-    //include: [Review]
+    
   })
     .then(result => {
       res.status(200).send(result);
     })
     .catch(next);
 });
+
+router.get("/boards/:id", function(req, res, next) {
+  Board.findOne({
+     where: { id: req.params.id }
+  })
+    .then(result => {
+      res.status(200).send(result);
+    })
+    .catch(next);
+});
+
+//Find all boards by user: 
+router.get("/userboards/:id", function(req, res, next) {
+  Board.findAll({
+     where: { userId: req.params.id }
+  })
+    .then(result => {
+      res.status(200).send(result);
+    })
+    .catch(next);
+});
+
+
 
 // ----------------------------------------
 // Create User
@@ -61,13 +84,15 @@ router.post("/users/:id/newboard", async (req, res) => {
 
     let newBoard = req.body.newBoard;
 
-    let board = await Board.create({ name: newBoard, userId: id });
+    let board = await Board.create({ title: newBoard, userId: id });
 
     res.json(board);
   } catch (e) {
     next(e);
   }
 });
+
+module.exports = router
 
 /*router.post("/board/:id/newlist", async (req, res) => {
   //chage to list

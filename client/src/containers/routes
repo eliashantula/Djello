@@ -1,0 +1,4 @@
+routes 
+  <Route exact path="/boards/:id" component={IndividualBoardContainer} />
+                  <Route exact path="/cards" component={CardsContainer} />
+                  <Route exact path="/card/:id" component={CardContainer} />
