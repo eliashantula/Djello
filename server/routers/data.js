@@ -34,7 +34,7 @@ router.get("/boards", function(req, res, next) {
     .catch(next);
 });
 
-router.get("/boards/:id", function(req, res, next) {
+router.get("/board/:id", function(req, res, next) {
   Board.findOne({
      where: { id: req.params.id }
   })

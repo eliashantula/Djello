@@ -1,36 +1,41 @@
-import * as Actions from './actions'
+import * as Actions from "./actions";
 
 const initialState = {
-  boards: {},
+  boards: [],
   isFetching: false,
   error: null,
-}
+  currentBoard: []
+};
 
-export function boards(state = initialState, action) {
+export function getBoards(state = initialState, action) {
   switch (action.type) {
     case Actions.GET__SUCCESS:
       return {
         ...state,
         boards: action.data,
-        isFetching: false,
-      }
+        isFetching: false
+      };
     case Actions.GET__REQUEST:
-    console.log("!!!!!!")
+      console.log("!!!!!!");
       return {
         ...state,
         isFetching: true,
-        error: null,
-      }
+        error: null
+      };
     case Actions.GET__FAILURE:
-      console.log('Error:', action.error)
+      console.log("Error:", action.error);
       return {
         ...state,
         isFetching: false,
-        error: action.error,
-      }
+        error: action.error
+      };
+    case Actions.GET__BOARD:
+      return {
+        ...state,
+        currentBoard: action.data,
+        isFetching: false
+      };
     default:
-      return state
+      return state;
   }
 }
-
-

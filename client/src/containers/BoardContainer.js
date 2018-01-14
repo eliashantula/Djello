@@ -25,8 +25,8 @@ class BoardContainer extends Component {
 //getting the store state to container's props
 const mapStateToProps = state => {
   return {
-    boards: state.boards.boards,
-    isFetching: state.boards.isFetching,
+    boards: state.boards,
+    isFetching: state.isFetching,
   };
 };
 

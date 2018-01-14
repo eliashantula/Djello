@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import "bootstrap/dist/css/bootstrap.css";
 import BoardContainer from'./containers/BoardContainer';
+import SpecificBoardContainer from'./containers/SpecificBoardContainer';
 import {
   BrowserRouter as Router,
   Route,
@@ -25,23 +26,27 @@ class App extends Component {
             </h1>
           </nav>
           <div className="App container-fluid">
-           <div className="Board">
-                
-              </div>
+          
+                <NavLink exact to="/newboard" activeClassName="active">
+        New Board
+      </NavLink>{' '}
+     
+
+           
                <div>
-      <NavLink exact to="/about" activeClassName="active">
-        About
-      </NavLink>{' '}
-      <NavLink exact to="/yourboards" activeStyle={{color: 'red'}}>
-        Your Boards
-      </NavLink>{' '}
+<BoardContainer />
       </div>
+
+      
             <div className="row">
+
               <div className="col-xl-6">
-                <BoardContainer />
-              </div>
+             
+             </div>
               <div className="col-xl-6">
                 <Switch>
+                <Route  exact path="/board/:id" component = {SpecificBoardContainer} />  
+                <Route exact path="/" render = {()=><h1 style={{marginTop: "60px"}}>Welcome</h1>} />
                 
                 </Switch>
               </div>

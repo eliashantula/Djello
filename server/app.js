@@ -90,6 +90,7 @@ app.use(morganToolkit());
 // Routes
 // ----------------------------------------
 const data = require("./routers/data");
+app.use('/', data)
 app.use("/api", data);
 
 
