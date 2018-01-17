@@ -1,11 +1,10 @@
 "use strict";
 module.exports = (sequelize, DataTypes) => {
-  var Board = sequelize.define(
-    "Board",
+  var List = sequelize.define(
+    "List",
     {
       title: DataTypes.STRING,
-      userId: DataTypes.INTEGER
-
+      boardId: DataTypes.INTEGER
     },
     {
       classMethods: {
@@ -15,13 +14,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   );
-  Board.associate = function(models) {
-    Board.belongsTo(models.User, {
-      foreignKey: "userId"
-    });
-    Board.hasMany(models.List, {
+
+  List.associate = function(models) {
+    List.belongsTo(models.Board, {
       foreignKey: "boardId"
     });
   };
-  return Board;
+  return List;
 };

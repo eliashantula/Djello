@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import Board from '../components/Board'
 import {getInitialBoards} from '../actions'
 import {bindActionCreators} from "redux"
+import {onSubmit} from '../actions'
 
 
 class BoardContainer extends Component {
@@ -11,28 +12,32 @@ class BoardContainer extends Component {
   }
 
   render() {
-    const {getInitialBoards, boards, isFetching} = this.props;
+    const {getInitialBoards, boards, isFetching, currentPage, onSubmit} = this.props;
     return (
       <Board
         getInitialBoards={getInitialBoards}
         boards={boards}
         isFetching={isFetching}
+        currentPage={currentPage}
+        onSubmit={onSubmit}
+        
       />
     );
   }
 }
 
-//getting the store state to container's props
+
 const mapStateToProps = state => {
   return {
     boards: state.boards,
     isFetching: state.isFetching,
+    currentPage: state.currentPage
   };
 };
 
-//allowing container to access action calls
+
 const mapDispatchToProps = dispatch => {
-  const actions = {getInitialBoards};
+  const actions = {getInitialBoards, onSubmit};
   return bindActionCreators(actions, dispatch);
 };
 

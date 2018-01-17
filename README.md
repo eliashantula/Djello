@@ -20,7 +20,7 @@ Title
 Lists One to one => Board
 ID
 Title
-
+sequelize model:create --name List --attributes "title: string boardId: integer"
 Cards One to Many => Lists
 One to Many => Activity
 Members One to Many => Comments

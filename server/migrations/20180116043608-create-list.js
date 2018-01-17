@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Boards', {
+    return queryInterface.createTable("Lists", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,24 +11,22 @@ module.exports = {
       title: {
         type: Sequelize.STRING
       },
-
-      userId: {
+      boardId: {
         type: Sequelize.INTEGER
       },
-
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('NOW')
+        defaultValue: Sequelize.fn("NOW")
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('NOW')
+        defaultValue: Sequelize.fn("NOW")
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Boards');
+    return queryInterface.dropTable("Lists");
   }
 };

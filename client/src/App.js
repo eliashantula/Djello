@@ -1,58 +1,60 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import logo from "./logo.svg";
+import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
-import BoardContainer from'./containers/BoardContainer';
-import SpecificBoardContainer from'./containers/SpecificBoardContainer';
+import BoardContainer from "./containers/BoardContainer";
+import SpecificBoardContainer from "./containers/SpecificBoardContainer";
+
 import {
   BrowserRouter as Router,
   Route,
   NavLink,
-  Switch
+  Switch,
+  Link
 } from "react-router-dom";
 
 class App extends Component {
   render() {
-      return (
+    return (
       <Router>
         <div>
           <nav
             className="navbar navbar-light bg-faded"
-            style={{marginBottom: "40px"}}>
+            style={{ marginBottom: "40px", backgroundColor: "red", borderRadius: "20px" }}
+
+          >
             <h1>
-              <a className="navbar-brand">
-                Welcome to your DJELLO!
-              </a>{" "}
+              <a className="navbar-brand"><Link to="/">Welcome to your DJELLO!</Link></a>{" "}
             </h1>
           </nav>
-          <div className="App container-fluid">
-          
-                <NavLink exact to="/newboard" activeClassName="active">
-        New Board
-      </NavLink>{' '}
-     
+          <div
+            className="App container-fluid"
+            style={{ backgroundColor: "blue", height: "800px" }}
+          >
+            <div>
+              <BoardContainer />
+            </div>
 
            
-               <div>
-<BoardContainer />
-      </div>
-
-      
-            <div className="row">
-
-              <div className="col-xl-6">
+          
              
-             </div>
-              <div className="col-xl-6">
                 <Switch>
-                <Route  exact path="/board/:id" component = {SpecificBoardContainer} />  
-                <Route exact path="/" render = {()=><h1 style={{marginTop: "60px"}}>Welcome</h1>} />
-                
+                  <Route
+                    exact
+                    path="/board/:id"
+                    component={SpecificBoardContainer}
+                  />
+                  <Route
+                    exact
+                    path="/"
+                    render={() => (
+                      <h1 style={{ marginTop: "60px" }}>Welcome</h1>
+                    )}
+                  />
                 </Switch>
               </div>
             </div>
-          </div>
-        </div>
+         
       </Router>
     );
   }

@@ -1,5 +1,11 @@
-import React, {Component} from "react";
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import React, { Component } from "react";
+import {
+  Button,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from "reactstrap";
 
 import "bootstrap/dist/css/bootstrap.css";
 import {
@@ -7,9 +13,11 @@ import {
   Route,
   NavLink,
   Switch,
-  Link
+  Link,
+  withRouter
 } from "react-router-dom";
-
+import CreateModal from "./CreateModal";
+import CreateModalContainer from "../containers/CreateModalContainer";
 
 class BoardList extends Component {
   constructor(props) {
@@ -17,8 +25,10 @@ class BoardList extends Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       theboards: this.props.boards,
-      dropdownOpen: false
-    }
+      dropdownOpen: false,
+      value: ""
+    };
+    
   }
 
   toggle() {
@@ -27,33 +37,57 @@ class BoardList extends Component {
     });
   }
 
+  select(event) {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen,
+      value: event.currentTarget.value
+    });
+  }
+
+  componentWillReceiveProps() {
+    const { getInitialBoards, boards, isFetching, currentPage, onSubmit } = this.props;
+
+  
+  }
   componentDidMount() {
-    const {getInitialBoards, boards, isFetching} = this.props;
+    const { getInitialBoards, boards, isFetching, currentPage, onSubmit } = this.props;
 
     getInitialBoards();
+    this.setState({
+      theboards: this.props.boards
+    });
   }
   render() {
-    const {getInitialBoards, boards, isFetching} = this.props;
-   
+    const { currentPage, getInitialBoards, boards, isFetching, onSubmit } = this.props;
+    
     return (
       <div>
-
-        <div className="card text-right" style={{background: "white", border: "none"}}>
-          
+        <div
+          className="card text-right"
+          style={{ background: "white", border: "none" }}
+        >
           <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-        <DropdownToggle caret>
-          Select a Board
-        </DropdownToggle>
-        <DropdownMenu>
-           {boards.map(board => {
-            return (
-          <DropdownItem tag={Link} exact to={`/board/${board.id}`} activeClassName="active">{`Board:${board.title}`}</DropdownItem>
-         
-)
-          })}
-        </DropdownMenu>
-      </Dropdown>
-         
+            <DropdownToggle caret>Select a Board</DropdownToggle>
+            <DropdownMenu>
+              {boards.map(board => {
+                return (
+                  <DropdownItem
+                    tag={Link}
+                    exact
+                    to={`/board/${board.id}`}
+                    activeclassname="active"
+                  >{`Board:${board.title}`}</DropdownItem>
+                );
+              })}
+            </DropdownMenu>
+          </Dropdown>
+          <div className="buttons">
+            <Button onClick={onSubmit} style={{ width: "175px", float: "right", marginLeft: "10px" }} value={currentPage.id} color="danger">
+              Delete Board {`${currentPage.title}`}
+            </Button>
+
+            <CreateModalContainer />
+          </div>
         </div>
       </div>
     );
