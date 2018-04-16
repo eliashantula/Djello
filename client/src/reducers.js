@@ -6,7 +6,9 @@ const initialState = {
   error: null,
   currentBoard: undefined,
   currentPage: { title: " " },
-  blists: []
+  blists: [],
+  cards: [],
+  currentList: undefined,
 };
 
 export function getBoards(state = initialState, action) {
@@ -90,7 +92,13 @@ export function getBoards(state = initialState, action) {
         blists: [...state.blists, action.data],
         isFetching: false
       };
+case Actions.CREATE__CARD:
+      return {
+        ...state,
 
+        blists: [...state.cards, action.data],
+        isFetching: false
+      };
    /* case Actions.GETALL_REQUEST:
       return {
         loading: true

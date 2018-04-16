@@ -136,6 +136,24 @@ router.post(["/newlist"], async (req, res) => {
   }
 });
 
+
+router.post(["/newcard"], async (req, res) => {
+  try {
+    console.log(req.body);
+    var title = req.body.title;
+    var description = req.body.description
+    var listid = parseInt(req.body.listId);
+    var completed = req.body.completed
+    let card = await Cards.create({ title: title, listId: listid, completed: completed, description: description });
+
+    res.status(200).send(list);
+  } catch (e) {
+    next(e);
+  }
+});
+
+
+
 router.put("/list/put/:id", (req, res) => {
   console.log(req.params.id)
 console.log(req.body)

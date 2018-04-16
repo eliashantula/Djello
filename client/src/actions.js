@@ -6,7 +6,7 @@ export const CREATE__BOARD = "CREATE__BOARD";
 export const DELETE__BOARD = "DELETE__BOARD";
 export const CREATE__LIST = "CREATE__LIST";
 export const DELETE__SUCCESS = "DELETE__SUCCESS"
-
+export const CREATE__CARD = "CREATE__CARD"
 export function getRequest() {
   return {
     type: GET__REQUEST
@@ -22,6 +22,13 @@ export function deleteBoard(id) {
 export function createBoard(data) {
   return {
     type: CREATE__BOARD,
+    data
+  };
+}
+
+export function createCard(data) {
+  return {
+    type: CREATE__CARD,
     data
   };
 }
@@ -129,6 +136,7 @@ export function onSubmits(e) {
         }
 
         return response.json();
+
       })
       .then(json => {
         console.log(json);
@@ -231,6 +239,37 @@ export function createABoard(data) {
   };
 }
 
+export function createAList(data) {
+  var myHeaders = new Headers();
+
+  myHeaders.append("content-type", "application/json");
+  return dispatch => {
+    dispatch(getRequest());
+
+    fetch("/newlist", {
+      method: "POST",
+      headers: myHeaders,
+      mode: "cors",
+      cache: "default",
+      body: JSON.stringify(data)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`${response.status} ${response.statusText}`);
+        }
+
+        return response.json();
+      })
+      .then(json => {
+        console.log(json);
+        //dispatch(createList(json));
+        dispatch(getOneBoard(json.boardId));
+      })
+      .catch(error => {
+        dispatch(getFailure(error));
+      });
+  };
+}
 export function createAList(data) {
   var myHeaders = new Headers();
 
