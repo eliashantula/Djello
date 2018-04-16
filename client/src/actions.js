@@ -5,6 +5,7 @@ export const GET__BOARD = "GET__BOARD";
 export const CREATE__BOARD = "CREATE__BOARD";
 export const DELETE__BOARD = "DELETE__BOARD";
 export const CREATE__LIST = "CREATE__LIST";
+export const DELETE__SUCCESS = "DELETE__SUCCESS"
 
 export function getRequest() {
   return {
@@ -27,6 +28,13 @@ export function createBoard(data) {
 export function getSuccess(data) {
   return {
     type: GET__SUCCESS,
+    data
+  };
+}
+
+export function deleteSuccess(data) {
+  return {
+    type: DELETE__SUCCESS,
     data
   };
 }
@@ -97,7 +105,6 @@ export function onSubmit(e) {
         //do not pull all data on delete,
       })
       .catch(error => {
-        // Dispatch failure which sets the error in state
         dispatch(getFailure(error));
       });
   };
@@ -105,7 +112,9 @@ export function onSubmit(e) {
 
 export function onSubmits(e) {
   e.preventDefault();
+  console.log(e.target)
   const id = e.target.value;
+  console.log(e.target.value);
 
   return dispatch => {
     dispatch(getRequest());
@@ -122,55 +131,57 @@ export function onSubmits(e) {
         return response.json();
       })
       .then(json => {
+        console.log(json);
         //dispatch(deleteBoard(id))
-        dispatch(getSuccess(json));
-      
+        dispatch(deleteSuccess(json));
       })
       .catch(error => {
-        // Dispatch failure which sets the error in state
         dispatch(getFailure(error));
       });
   };
 }
 
-/*export function deleteBoard(id) {
-  return (dispatch) => {
-  
-  
-  fetch(`delete/${id}`, {
-      method: "DELETE",
-      body: JSON.stringify(id),
-      headers: new Headers({
-        "Content-Type": "application/json",
-      }),
-    .then((response) => {
-      // If response not okay, throw an error
-      if (!response.ok) {
-        throw new Error(`${response.status} ${response.statusText}`)
-      }
-      
-      
-     
+export function onChanges(data) {
+  var myHeaders = new Headers();
+
+  myHeaders.append("content-type", "application/json");
+  return dispatch => {
+    console.log(parseInt(Object.keys(data)));
+    let datas = {title: data[Object.keys(data)]}
+    console.log(datas)
+    dispatch(getRequest());
+
+    fetch(`/list/put/${Object.keys(data)}`, {
+      method: "PUT",
+      headers: myHeaders,
+      mode: "cors",
+      cache: "default",
+      body: JSON.stringify(datas)
     })
-    .then((response) => {
-      response
-     
-    }).
-    .catch((error) => {
-      // Dispatch failure which sets the error in state
-      dispatch(getFailure(error))
-    })
-  }
-}*/
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`${response.status} ${response.statusText}`);
+        }
+
+        return response.json();
+      })
+      .then(json => {
+        console.log(json);
+        //dispatch(createList(json));
+        dispatch(getOneBoard(json.boardId));
+      })
+      .catch(error => {
+        dispatch(getFailure(error));
+      });
+  };
+}
 
 export function getInitialBoards() {
   return dispatch => {
-    // Update the state so that it knows the request has begun
     dispatch(getRequest());
 
     fetch("/api/boards")
       .then(response => {
-        // If response not okay, throw an error
         if (!response.ok) {
           throw new Error(`${response.status} ${response.statusText}`);
         }
@@ -192,7 +203,7 @@ export function createABoard(data) {
 
   myHeaders.append("content-type", "application/json");
   return dispatch => {
-    console.log(data);
+   
     dispatch(getRequest());
     console.log(data);
     fetch("/newboard", {
@@ -210,9 +221,9 @@ export function createABoard(data) {
         return response.json();
       })
       .then(json => {
-        console.log(json.id);
-        //dispatch(createBoard(json));
-        dispatch(getOneBoard(json.id));
+        console.log(json);
+        dispatch(createBoard(json));
+        /*dispatch(getOneBoard(json.id))*/;
       })
       .catch(error => {
         dispatch(getFailure(error));

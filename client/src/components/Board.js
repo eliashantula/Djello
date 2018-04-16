@@ -59,7 +59,7 @@ class BoardList extends Component {
   }
   render() {
     const { currentPage, getInitialBoards, boards, isFetching, onSubmit } = this.props;
-    
+    console.log(boards)
     return (
       <div>
         <div

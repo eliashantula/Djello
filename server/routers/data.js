@@ -33,7 +33,7 @@ router.get("/boards", function(req, res, next) {
 router.get("/board/:id", function(req, res, next) {
   let id = req.params.id;
 
-  console.log(id);
+
   Board.findById(id, {
     include: [{ model: List }, { model: User }]
   })
@@ -84,21 +84,30 @@ router.delete("/board/delete/:id", (req, res) => {
 });
 
 router.delete("/list/delete/:id", (req, res) => {
-  List.destroy({
+  console.log(req.params)
+  List.findOne({
     where: { id: req.params.id },
     limit: 1
-  }).then(() => {
-    Board.findAll({})
+  })
+  /*List.destroy({
+    where: { id: req.params.id },
+    limit: 1 
+  })*/.then((list) => {
+    let thisId = list.boardId
+    List.destroy({
+    where: { id: req.params.id }
+  }).then(()=>{
+    Board.findById(thisId, {
+    include: [{ model: List }, { model: User }]
+    })
       .then(result => {
+        console.log(result)
         res.status(200).send(result);
       })
       .catch(e => res.status(500).send(e.stack));
   });
+})
 });
-
-
-
-
 
 router.post(["/board/newboard", "/newboard"], async (req, res) => {
   try {
@@ -107,8 +116,8 @@ router.post(["/board/newboard", "/newboard"], async (req, res) => {
     let board = await Board.create({ title: titles, userId: id });
     let boardfull = await Board.findById(id, {
       include: [{ model: List }, { model: User }]
-
-    }); console.log(board)
+    });
+    
     res.status(200).send(board);
   } catch (e) {
     next(e);
@@ -125,6 +134,22 @@ router.post(["/newlist"], async (req, res) => {
   } catch (e) {
     next(e);
   }
+});
+
+router.put("/list/put/:id", (req, res) => {
+  console.log(req.params.id)
+console.log(req.body)
+  List.findOne({
+    where: { id: req.params.id },
+    limit: 1
+  }).then((list) => {
+    console.log(list)
+    list.updateAttributes({title:req.body.title})
+      .then(result => {
+        res.status(200).send(result);
+      })
+      .catch(e => res.status(500).send(e.stack));
+  });
 });
 
 module.exports = router;

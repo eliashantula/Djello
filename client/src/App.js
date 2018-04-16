@@ -20,11 +20,16 @@ class App extends Component {
         <div>
           <nav
             className="navbar navbar-light bg-faded"
-            style={{ marginBottom: "40px", backgroundColor: "red", borderRadius: "20px" }}
-
+            style={{
+              marginBottom: "0px",
+              backgroundColor: "red",
+              borderRadius: "0px"
+            }}
           >
             <h1>
-              <a className="navbar-brand"><Link to="/">Welcome to your DJELLO!</Link></a>{" "}
+              <a className="navbar-brand">
+                <Link to="/">Welcome to your DJELLO!</Link>
+              </a>{" "}
             </h1>
           </nav>
           <div
@@ -35,26 +40,20 @@ class App extends Component {
               <BoardContainer />
             </div>
 
-           
-          
-             
-                <Switch>
-                  <Route
-                    exact
-                    path="/board/:id"
-                    component={SpecificBoardContainer}
-                  />
-                  <Route
-                    exact
-                    path="/"
-                    render={() => (
-                      <h1 style={{ marginTop: "60px" }}>Welcome</h1>
-                    )}
-                  />
-                </Switch>
-              </div>
-            </div>
-         
+            <Switch>
+              <Route
+                exact
+                path="/board/:id"
+                component={SpecificBoardContainer}
+              />
+              <Route
+                exact
+                path="/"
+                render={() => <h1 style={{ marginTop: "60px" }}>Welcome</h1>}
+              />
+            </Switch>
+          </div>
+        </div>
       </Router>
     );
   }

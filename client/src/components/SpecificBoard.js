@@ -9,16 +9,29 @@ import {
 import { Container, Row, Col, Button } from "reactstrap";
 import List from "./List";
 import CreateListModalContainer from "../containers/CreateListModalContainer";
-var ContentEditable = require('react-wysiwyg');
+import { RIEToggle, RIEInput, RIETextArea, RIENumber, RIETags, RIESelect } from 'riek'
+import {  Modal, ModalHeader, ModalBody, ModalFooter,   Form, FormGroup, Label, Input, FormText  } from 'reactstrap'
+var ContentEditable = require("react-wysiwyg");
 class SpecificBoardList extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
+      
       currentBoard: this.props.currentBoard,
       currentPage: this.props.currentPage,
-      lists: this.props.currentPage.Lists
+      lists: this.props.currentPage.Lists,
+      id: 0,
+      title: null
     };
   }
+
+  dataChanged(data) {
+        // data = { description: "New validated text comes here" }
+        // Update your model from here
+        console.log(data)
+      
+    }
   componentWillReceiveProps(nextProps) {
     if (this.props.match.params.id !== nextProps.match.params.id) {
       console.log(nextProps);
@@ -28,7 +41,6 @@ class SpecificBoardList extends Component {
         lists: nextProps.currentBoard.Lists
       });
     } else if (this.props.currentBoard !== nextProps.currentBoard) {
-      console.log(nextProps.currentBoard);
       this.setState({
         lists: nextProps.currentBoard.Lists,
         currentPage: nextProps.currentPage
@@ -43,7 +55,8 @@ class SpecificBoardList extends Component {
       currentBoard,
       isFetching,
       currentPage,
-      onSubmits
+      onSubmits,
+      onChanges
     } = this.props;
 
     getOneBoard(match.params.id);
@@ -55,18 +68,17 @@ class SpecificBoardList extends Component {
       isFetching,
       match,
       currentPage,
-      lists,
-      onSubmits
+      onSubmits,
+      onChanges
     } = this.props;
 
     let currentP = [];
     if (this.state.lists) {
       currentP = this.state.lists;
     }
-    console.log(currentP);
+    
     return (
       <div style={{ border: "2px solid black", borderRadius: "20px" }}>
-      
         <div className="card text-center">
           <h2>{currentPage.title}</h2>
           <h4 />
@@ -74,26 +86,42 @@ class SpecificBoardList extends Component {
 
           <Container
             style={{
-              border: "5px solid black",
+              border: "0px solid black",
               background: "white",
-              paddingTop: "20px"
+              paddingTop: "40px"
             }}
           >
-            <Row style={{ border: "1px solid black" }}>
+            <Row style={{ border: "0px solid black" }}>
               {currentP.length > 0 &&
                 currentP.map(list => {
+                  
                   return (
                     <Col
-                      style={{ border: "2px solid black", height: "250px" }}
-                      md={{ size: 3, offset: 2 }}
-                    >
-                      {`Title: ${list.title}`}
+                      style={{ border: "2px solid black", height: "250px", width: "100%", paddingLeft: "00px", margin: "10px" }}
+                      sm={{ size: 4, offset: 0 }}
+                    > <h4>List:
+                 
+          
+         
+        
+                     <RIEInput change={onChanges}
+                     propName={list.id}
+                     
+                     value={list.title}
+
+
+
+
+                     />
+                    
+                 </h4>
+            
                       <Button
                         onClick={onSubmits}
                         style={{
-                          width: "115px",
-                          float: "right",
-                          marginLeft: "10px"
+                         
+                       
+                          margin: "auto"
                         }}
                         value={list.id}
                         color="danger"
